@@ -109,6 +109,40 @@
   </div>
 </fieldset>
 
+<script>
+  // TODO: move this function to util
+  function extractParams() {
+    const form = document.getElementById('mainForm');
+    const formData = new FormData(form);
+    const json = Object.fromEntries(formData);
+
+    const body = {
+      account: {},
+      login: { email: json.email, password: json.password, confirmPassword: json.confirmPassword }
+    };
+    if (json.createPod) {
+      body.pod = { name: json.podName };
+      if (!json.createWebId) {
+        body.pod.settings = { webId: json.webId };
+      }
+    }
+    // Registration happens automatically when a WebID is created
+    if (json.register && !json.createWebId) {
+      body.webId = { webId: json.webId };
+    }
+    return body;
+  }
+
+  // TODO: do password confirmation client-side?
+  (async() => {
+    let indexJson = await fetchJson('<%= idpIndex %>');
+    // TODO: this stuff should be in the specific page, not the partial, since setup uses a different URL
+    const registrationUrl = indexJson.controls.main.register;
+
+    // TODO: extract parameters to show response
+  })();
+</script>
+
 <!-- Assist the user with filling out the form by hiding irrelevant fields -->
 <script>
   const elements = {};
