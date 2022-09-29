@@ -1,0 +1,23 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^5.0.0/components/context.jsonld",
+  "@graph": [
+    {
+      "comment": "Creates an empty HTTP server listening to the provided port.",
+      "@id": "urn:solid-server:default:ServerFactory",
+      "@type": "BaseServerFactory"
+    },
+    {
+      "@id": "urn:solid-server:default:ServerListener",
+      "@type": "ParallelHandler",
+      "handlers": [
+        {
+          "comment": "Handles all request events from the server.",
+          "@id": "urn:solid-server:default:HandlerServerListener",
+          "@type": "HandlerServerListener",
+          "handler": { "@id": "urn:solid-server:default:HttpHandler" },
+          "showStackTrace": { "@id": "urn:solid-server:default:variable:showStackTrace" }
+        }
+      ]
+    }
+  ]
+}

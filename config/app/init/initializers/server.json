@@ -6,6 +6,7 @@
       "@id": "urn:solid-server:default:ServerInitializer",
       "@type": "ServerInitializer",
       "serverFactory": { "@id": "urn:solid-server:default:ServerFactory" },
+      "serverListener": { "@id": "urn:solid-server:default:ServerListener" },
       "port": { "@id": "urn:solid-server:default:variable:port" }
     }
   ]

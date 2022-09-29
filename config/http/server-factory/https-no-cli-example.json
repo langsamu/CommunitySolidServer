@@ -1,0 +1,26 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^5.0.0/components/context.jsonld",
+  "@graph": [
+    {
+      "comment": "An example of how to set up an HTTPS server providing key/cert paths directly in the config.",
+      "@id": "urn:solid-server:default:ServerFactory",
+      "@type": "BaseServerFactory",
+      "options_https": true,
+      "options_key": "/path/to/server.key",
+      "options_cert": "/path/to/server.cert"
+    },
+    {
+      "@id": "urn:solid-server:default:ServerListener",
+      "@type": "ParallelHandler",
+      "handlers": [
+        {
+          "comment": "Handles all request events from the server.",
+          "@id": "urn:solid-server:default:HandlerServerListener",
+          "@type": "HandlerServerListener",
+          "handler": { "@id": "urn:solid-server:default:HttpHandler" },
+          "showStackTrace": { "@id": "urn:solid-server:default:variable:showStackTrace" }
+        }
+      ]
+    }
+  ]
+}

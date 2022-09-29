@@ -6,7 +6,7 @@
     "css:config/app/setup/required.json",
     "css:config/app/variables/default.json",
     "css:config/http/handler/default.json",
-    "css:config/http/middleware/websockets.json",
+    "css:config/http/middleware/default.json",
 
     "css:config/http/static/default.json",
     "css:config/identity/access/public.json",
@@ -39,23 +39,27 @@
         "The http/server-factory import above has been omitted since that feature is set below."
       ]
     },
+
     {
-      "comment": "The key/cert values should be replaces with paths to the correct files. The 'options' block can be removed if not needed.",
+      "comment": "The key/cert values should be replaces with paths to the correct files.",
       "@id": "urn:solid-server:default:ServerFactory",
-      "@type": "WebSocketServerFactory",
-      "baseServerFactory": {
-        "@id": "urn:solid-server:default:HttpServerFactory",
-        "@type": "BaseHttpServerFactory",
-        "handler": { "@id": "urn:solid-server:default:HttpHandler" },
-        "options_showStackTrace": { "@id": "urn:solid-server:default:variable:showStackTrace" },
-        "options_https": true,
-        "options_key": "/path/to/server.key",
-        "options_cert": "/path/to/server.cert"
-      },
-      "webSocketHandler": {
-        "@type": "UnsecureWebSocketsProtocol",
-        "source": { "@id": "urn:solid-server:default:ResourceStore" }
-      }
+      "@type": "BaseServerFactory",
+      "options_https": true,
+      "options_key": "/path/to/server.key",
+      "options_cert": "/path/to/server.cert"
+    },
+    {
+      "@id": "urn:solid-server:default:ServerListener",
+      "@type": "ParallelHandler",
+      "handlers": [
+        {
+          "comment": "Handles all request events from the server.",
+          "@id": "urn:solid-server:default:HandlerServerListener",
+          "@type": "HandlerServerListener",
+          "handler": { "@id": "urn:solid-server:default:HttpHandler" },
+          "showStackTrace": { "@id": "urn:solid-server:default:variable:showStackTrace" }
+        }
+      ]
     }
   ]
 }

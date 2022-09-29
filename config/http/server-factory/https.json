@@ -1,0 +1,36 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^5.0.0/components/context.jsonld",
+  "import": [
+    "css:config/http/server-factory/https/cli.json",
+    "css:config/http/server-factory/https/resolver.json"
+  ],
+  "@graph": [
+    {
+      "comment": "Creates an empty HTTPS server listening to the provided port using the key/cert paths provided through the CLI.",
+      "@id": "urn:solid-server:default:ServerFactory",
+      "@type": "BaseServerFactory",
+      "options_https": true,
+      "options_key": {
+        "@id": "urn:solid-server:custom:variable:httpsKey",
+        "@type": "Variable"
+      },
+      "options_cert": {
+        "@id": "urn:solid-server:custom:variable:httpsCert",
+        "@type": "Variable"
+      }
+    },
+    {
+      "@id": "urn:solid-server:default:ServerListener",
+      "@type": "ParallelHandler",
+      "handlers": [
+        {
+          "comment": "Handles all request events from the server.",
+          "@id": "urn:solid-server:default:HandlerServerListener",
+          "@type": "HandlerServerListener",
+          "handler": { "@id": "urn:solid-server:default:HttpHandler" },
+          "showStackTrace": { "@id": "urn:solid-server:default:variable:showStackTrace" }
+        }
+      ]
+    }
+  ]
+}
