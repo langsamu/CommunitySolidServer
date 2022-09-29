@@ -298,6 +298,9 @@ export * from './server/middleware/HeaderHandler';
 export * from './server/middleware/StaticAssetHandler';
 export * from './server/middleware/WebSocketAdvertiser';
 
+// Server/Notifications
+export * from './server/notifications/ActivityEmitter';
+
 // Server/Util
 export * from './server/util/RedirectingHttpHandler';
 export * from './server/util/RouterHandler';
@@ -468,6 +471,7 @@ export * from './util/templates/TemplateUtil';
 // Util
 export * from './util/ContentTypes';
 export * from './util/FetchUtil';
+export * from './util/GenericEventEmitter';
 export * from './util/GuardedStream';
 export * from './util/HeaderUtil';
 export * from './util/IterableUtil';
