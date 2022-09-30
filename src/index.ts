@@ -108,6 +108,7 @@ export * from './http/output/metadata/LinkRelMetadataWriter';
 export * from './http/output/metadata/MappedMetadataWriter';
 export * from './http/output/metadata/MetadataWriter';
 export * from './http/output/metadata/ModifiedMetadataWriter';
+export * from './http/output/metadata/StorageDescriptionAdvertiser';
 export * from './http/output/metadata/WacAllowMetadataWriter';
 export * from './http/output/metadata/WwwAuthMetadataWriter';
 
@@ -291,6 +292,11 @@ export * from './server/OperationHttpHandler';
 export * from './server/ParsingHttpHandler';
 export * from './server/ServerListener';
 export * from './server/WebSocketServerListener';
+
+// Server/Description
+export * from './server/description/StaticStorageDescriber';
+export * from './server/description/StorageDescriber';
+export * from './server/description/StorageDescriptionHandler';
 
 // Server/Middleware
 export * from './server/middleware/AcpHeaderHandler';
