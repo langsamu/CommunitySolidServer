@@ -1,0 +1,27 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^5.0.0/components/context.jsonld",
+  "@graph": [
+    {
+      "comment": "Catches newly opened WebSockets and verifies if they belong to a subscription.",
+      "@id": "urn:solid-server:default:WebSocket2021Listener",
+      "@type": "WebSocket2021Listener",
+      "storage": { "@id": "urn:solid-server:default:SubscriptionStorage" },
+      "route": { "@id": "urn:solid-server:default:WebSocket2021Route" },
+      "handler": {
+        "@type": "SequenceHandler",
+        "handlers": [
+          { "@id": "urn:solid-server:default:WebSocket2021Emitter" },
+          { "@id": "urn:solid-server:default:WebSocket2021StateHandler" }
+        ]
+      }
+    },
+
+    {
+      "@id": "urn:solid-server:default:ServerListener",
+      "@type": "ParallelHandler",
+      "handlers": [
+        { "@id": "urn:solid-server:default:WebSocket2021Listener" }
+      ]
+    }
+  ]
+}

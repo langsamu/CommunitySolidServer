@@ -1,0 +1,12 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^5.0.0/components/context.jsonld",
+  "@graph": [
+    {
+      "comment": "Handles the state feature of a WebSocketSubscription2021 subscription.",
+      "@id": "urn:solid-server:default:WebSocket2021StateHandler",
+      "@type": "BaseStateHandler",
+      "handler": { "@id": "urn:solid-server:default:WebSocket2021NotificationHandler" },
+      "storage": { "@id": "urn:solid-server:default:SubscriptionStorage" }
+    }
+  ]
+}
