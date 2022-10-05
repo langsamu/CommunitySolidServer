@@ -22,19 +22,23 @@ export class RepresentationConvertingStore<T extends ResourceStore = ResourceSto
   private readonly inPreferences: RepresentationPreferences;
 
   /**
-   * TODO: This should take RepresentationPreferences instead of a type string when supported by Components.js.
+   * @param source - Source store to get data from.
+   * @param metadataStrategy - Used to identify metadata resources as those always need to be converted.
+   * @param options - `outConverter` converts data returned by the store,
+   * `inConverter` converts incoming data,
+   * `inPreferences` determines how incoming data should be converted.
    */
   public constructor(source: T, metadataStrategy: AuxiliaryStrategy, options: {
     outConverter?: RepresentationConverter;
     inConverter?: RepresentationConverter;
-    inType?: string;
+    inPreferences?: RepresentationPreferences;
   }) {
     super(source);
     this.metadataStrategy = metadataStrategy;
-    const { inConverter, outConverter, inType } = options;
+    const { inConverter, outConverter, inPreferences } = options;
     this.inConverter = inConverter ?? new PassthroughConverter();
     this.outConverter = outConverter ?? new PassthroughConverter();
-    this.inPreferences = !inType ? {} : { type: { [inType]: 1 }};
+    this.inPreferences = inPreferences ?? {};
   }
 
   public async getRepresentation(identifier: ResourceIdentifier, preferences: RepresentationPreferences,
