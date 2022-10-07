@@ -1,5 +1,6 @@
 import { ComponentsManager } from 'componentsjs';
-import type { ClusterManager } from '../../../src';
+import { getLoggerFor } from '../../../src';
+import type { Logger, ClusterManager } from '../../../src';
 import type { App } from '../../../src/init/App';
 import { AppRunner } from '../../../src/init/AppRunner';
 import type { CliExtractor } from '../../../src/init/cli/CliExtractor';
@@ -74,6 +75,12 @@ jest.mock('componentsjs', (): any => ({
   },
 }));
 
+jest.mock('../../../src/logging/LogUtil', (): any => {
+  const logger: Logger =
+    { error: jest.fn() } as any;
+  return { getLoggerFor: (): Logger => logger };
+});
+
 jest.spyOn(process, 'cwd').mockReturnValue('/var/cwd');
 const write = jest.spyOn(process.stderr, 'write').mockImplementation(jest.fn());
 const exit = jest.spyOn(process, 'exit').mockImplementation(jest.fn() as any);
@@ -81,6 +88,22 @@ const exit = jest.spyOn(process, 'exit').mockImplementation(jest.fn() as any);
 describe('AppRunner', (): void => {
   afterEach((): void => {
     jest.clearAllMocks();
+  });
+
+  it('attaches a listener to log uncaught events.', async(): Promise<void> => {
+    const processSpy = jest.spyOn(process, 'on');
+    expect(new AppRunner()).toBeDefined();
+
+    expect(processSpy).toHaveBeenCalledTimes(1);
+    expect(processSpy.mock.calls[0][0]).toBe('uncaughtExceptionMonitor');
+    processSpy.mock.calls[0][1](new Error('bad data'), 'uncaughtException');
+
+    // Get the mocked logger which is also used by AppRunner
+    const logger = getLoggerFor('mock');
+
+    expect(logger.error).toHaveBeenLastCalledWith('Process is halting due to an uncaughtException with error bad data');
+
+    processSpy.mockReset();
   });
 
   describe('create', (): void => {

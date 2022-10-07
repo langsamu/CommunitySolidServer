@@ -34,6 +34,12 @@ const ENV_VAR_PREFIX = 'CSS';
 export class AppRunner {
   private readonly logger = getLoggerFor(this);
 
+  public constructor() {
+    process.on('uncaughtExceptionMonitor', (err, origin): void => {
+      this.logger.error(`Process is halting due to an ${origin} with error ${err.message}`);
+    });
+  }
+
   /**
    * Starts the server with a given config.
    * This method can be used to start the server from within another JavaScript application.
