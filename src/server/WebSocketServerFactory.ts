@@ -18,7 +18,7 @@ export class WebSocketServerFactory implements HttpServerFactory {
     this.webSocketHandler = webSocketHandler;
   }
 
-  public startServer(port: number): Server {
+  public startServer(portOrSocket: number | string): Server {
     // Create WebSocket server
     const webSocketServer = new WebSocketServer({ noServer: true });
     webSocketServer.on('connection', async(webSocket: WebSocket, upgradeRequest: HttpRequest): Promise<void> => {
@@ -26,7 +26,7 @@ export class WebSocketServerFactory implements HttpServerFactory {
     });
 
     // Create base HTTP server
-    const httpServer = this.baseServerFactory.startServer(port);
+    const httpServer = this.baseServerFactory.startServer(portOrSocket);
     httpServer.on('upgrade', (upgradeRequest: HttpRequest, socket: Socket, head: Buffer): void => {
       webSocketServer.handleUpgrade(upgradeRequest, socket, head, (webSocket: WebSocket): void => {
         webSocketServer.emit('connection', webSocket, upgradeRequest);

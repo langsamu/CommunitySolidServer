@@ -47,10 +47,11 @@ export async function removeFolder(folder: string): Promise<void> {
   await remove(folder);
 }
 
-export function getDefaultVariables(port: number, baseUrl?: string): Record<string, any> {
+export function getDefaultVariables(port: number, baseUrl?: string, socket?: string): Record<string, any> {
   return {
-    'urn:solid-server:default:variable:baseUrl': baseUrl ?? `http://localhost:${port}/`,
+    'urn:solid-server:default:variable:baseUrl': socket ? `http+unix://${socket.replace(/\//gui, '%2F')}` : baseUrl ?? `http://localhost:${port}/`,
     'urn:solid-server:default:variable:port': port,
+    'urn:solid-server:default:variable:socket': socket ?? null,
     'urn:solid-server:default:variable:loggingLevel': 'off',
     'urn:solid-server:default:variable:showStackTrace': true,
     'urn:solid-server:default:variable:seededPodConfigJson': null,

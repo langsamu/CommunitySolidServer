@@ -15,6 +15,9 @@ export class BaseUrlExtractor extends ShorthandExtractor {
   }
 
   public async handle(args: Shorthand): Promise<unknown> {
+    if (typeof args.socket === 'string') {
+      return `http+unix://${args.socket.replace(/\//gui, '%2F')}/`;
+    }
     if (typeof args.baseUrl === 'string') {
       return ensureTrailingSlash(args.baseUrl);
     }

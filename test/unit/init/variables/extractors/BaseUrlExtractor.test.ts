@@ -16,6 +16,10 @@ describe('A BaseUrlExtractor', (): void => {
     await expect(computer.handle({ port: 3333 })).resolves.toBe('http://localhost:3333/');
   });
 
+  it('uses Unix Domain Sockets if socket is set.', async(): Promise<void> => {
+    await expect(computer.handle({ socket: '/tmp/css.sock' })).resolves.toBe('http+unix://%2Ftmp%2Fcss.sock/');
+  });
+
   it('defaults to port 3000.', async(): Promise<void> => {
     await expect(computer.handle({})).resolves.toBe('http://localhost:3000/');
   });

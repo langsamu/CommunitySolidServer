@@ -7,6 +7,9 @@
 - The server can be configured to use [ACP](https://solidproject.org/TR/acp) instead of WebACL.
   `config/file-acp.json` is an example of a configuration that uses this authorization scheme instead.
 
+- The server can be configured to bind to Unix Domain Sockets instead of a TCP port.
+  Use the -S/--socket argument to provide an absolut path to the socket location.
+
 ### Data migration
 
 No actions are required to migrate data.
