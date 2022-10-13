@@ -53,6 +53,8 @@ The following changes are relevant for v5 custom configs that replaced certain f
 - Notification support was added.
     - `/http/handler/*`
     - `/notifications/*`
+- IDP private key generation was changed.
+    - `/identity/handler/*`
 
 ### Interface changes
 
@@ -68,6 +70,7 @@ These changes are relevant if you wrote custom modules for the server that depen
 - `CredentialSet` was replaced by a single `Credentials` interface.
   This impacts all authentication and authorization related classes.
 - `ServerInitializer` now additionally takes a `ServerListener` as input.
+- `IdentityProviderFactory` takes an addition `JwkGenerator` as input.
 
 ## v5.0.0
 
