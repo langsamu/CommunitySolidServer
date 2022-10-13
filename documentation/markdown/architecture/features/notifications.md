@@ -169,3 +169,13 @@ In this case this is a `SequenceHandler` which contains a `WebSocket2021Emitter`
 The `WebSocket2021Emitter` will store the WebSocket so it can later on emit events as mentioned above.
 The state handler will make sure that a notification gets sent out if the subscription has a `state` feature request,
 as defined in the notification specification.
+
+## WebHookSubscription2021
+
+The additions required to support WebHookSubscription2021
+are quite similar to those needed for WebSocketSubscription2021:
+
+* For discovery, there is a `WebHookDescriber`, which is an extension of a `NotificationDescriber`.
+* The `WebHookSubscription2021` class contains all the necessary typing information.
+* `WebHookEmitter` is the `NotificationEmitter` that sends the request.
+* `WebHookUnsubscriber` and `WebHookWebId` are additional utility classes to support the spec requirements.
