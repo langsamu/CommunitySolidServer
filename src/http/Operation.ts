@@ -1,3 +1,4 @@
+import type { Credentials } from '../authentication/Credentials';
 import type { PermissionMap } from '../authorization/permissions/Permissions';
 import type { Conditions } from '../storage/Conditions';
 import type { Representation } from './representation/Representation';
@@ -24,6 +25,10 @@ export interface Operation {
    * Conditions the resource must fulfill for a valid operation.
    */
   conditions?: Conditions;
+  /**
+   * The credentials of the client requesting the current operation.
+   */
+  credentials?: Credentials;
   /**
    * The permissions available for the current operation.
    */

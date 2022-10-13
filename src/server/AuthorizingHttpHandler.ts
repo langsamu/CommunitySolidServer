@@ -3,6 +3,7 @@ import type { CredentialsExtractor } from '../authentication/CredentialsExtracto
 import type { Authorizer } from '../authorization/Authorizer';
 import type { PermissionReader } from '../authorization/PermissionReader';
 import type { ModesExtractor } from '../authorization/permissions/ModesExtractor';
+import type { PermissionSet } from '../authorization/permissions/Permissions';
 import type { ResponseDescription } from '../http/output/response/ResponseDescription';
 import { getLoggerFor } from '../logging/LogUtil';
 import type { OperationHttpHandlerInput } from './OperationHttpHandler';
@@ -61,13 +62,16 @@ export class AuthorizingHttpHandler extends OperationHttpHandler {
   public async handle(input: OperationHttpHandlerInput): Promise<ResponseDescription> {
     const { request, operation } = input;
     const credentials: Credentials = await this.credentialsExtractor.handleSafe(request);
+    operation.credentials = credentials;
     this.logger.verbose(`Extracted credentials: ${JSON.stringify(credentials)}`);
 
     const requestedModes = await this.modesExtractor.handleSafe(operation);
-    this.logger.verbose(`Retrieved required modes: ${[ ...requestedModes.entrySets() ]}`);
+    this.logger.verbose(`Retrieved required modes: ${JSON.stringify([ ...requestedModes.entrySets() ]
+      .map(([ key, val ]): Record<string, string[]> => ({ [key.path]: [ ...val ]})))}`);
 
     const availablePermissions = await this.permissionReader.handleSafe({ credentials, requestedModes });
-    this.logger.verbose(`Available permissions are ${[ ...availablePermissions.entries() ]}`);
+    this.logger.verbose(`Available permissions are ${JSON.stringify([ ...availablePermissions.entries() ]
+      .map(([ key, val ]): Record<string, PermissionSet> => ({ [key.path]: val })))}`);
 
     try {
       await this.authorizer.handleSafe({ credentials, requestedModes, availablePermissions });

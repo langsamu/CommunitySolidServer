@@ -43,7 +43,10 @@
       "@id": "urn:solid-server:default:OperationMetadataCollector",
       "@type": "SequenceHandler",
       "handlers": [
-        { "@type": "WebAclMetadataCollector" }
+        {
+          "@type": "WebAclMetadataCollector",
+          "permissionReader": { "@id": "urn:solid-server:default:PermissionReader" }
+        }
       ]
     },
     {
